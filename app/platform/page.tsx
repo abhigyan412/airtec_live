@@ -5,14 +5,14 @@ import { CtaBand } from '@/components/site/blocks'
 
 export const metadata: Metadata = {
   title: 'Platform',
-  description: 'Web app for staff, a family portal with mobile apps, push notifications, Razorpay payments, biometric sync and Excel import.',
+  description: 'A staff mobile app and web app, a family portal with mobile apps, push notifications, Razorpay payments, biometric sync and Excel import.',
 }
 
 const ITEMS = [
   {
     icon: Globe,
-    title: 'Staff app in the browser',
-    body: 'Teachers, office staff and leadership use AIRTEC in any modern browser, on a desktop at the counter or a phone in the corridor.',
+    title: 'Staff mobile app and browser',
+    body: 'Teachers, office staff and leadership have their own mobile app, separate from the parents’ one, and can also use AIRTEC in any modern browser, on a desktop at the counter or a laptop at home.',
   },
   {
     icon: Smartphone,

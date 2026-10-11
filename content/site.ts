@@ -131,7 +131,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: 'Is there a mobile app?',
-    a: 'Parents and students use the family portal on their phone, with push notifications to the mobile app (Android and iOS) and to browsers. Staff use AIRTEC in the browser on any device.',
+    a: 'Parents and students use the family portal on their phone, with push notifications to the mobile app (Android and iOS) and to browsers. Staff have their own separate mobile app, and can also use AIRTEC in the browser on any device.',
   },
   {
     q: 'Who owns our data?',
