@@ -1,0 +1,351 @@
+/* Copied verbatim from frontend/app/globals.css @ d66bccd4 (staff app), comments
+   included: they record contrast measurements that must not be "fixed" back to
+   failing values. Keep in sync with the staff app and the family portal (plan
+   §3.8). Marketing-only additions are at the bottom, built from these tokens. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 248 60% 98.5%;
+    --foreground: 240 10% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+
+    --border: 240 6% 88%;
+    /* Splits from --border deliberately: an input's boundary is a UI component
+       boundary and owes 3:1 (WCAG 1.4.11). At 88% it measured 1.33:1, so the
+       field edge was effectively invisible. --border stays soft for decorative
+       card edges, which carry no such requirement. */
+    --input: 240 6% 60%;
+    --ring: 243 75% 59%;
+
+    --primary: 243 75% 59%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 5% 94%;
+    --secondary-foreground: 240 6% 20%;
+
+    --muted: 240 5% 94%;
+    --muted-foreground: 240 4% 42%;
+
+    --accent: 243 60% 95%;
+    --accent-foreground: 243 75% 40%;
+
+    /* Semantic trio, retuned for contrast. These are used as TEXT far more
+       often than as fills (status pills, dues, "Absent", "Partial"), and the
+       conventional lightness values fail WCAG AA badly in that role:
+         old --warning     38 92% 50%  =  2.14:1 on white  (needs 4.5)
+         old --success    152 62% 40%  =  3.14:1
+         old --destructive  0 84% 60%  =  3.78:1
+       Worse on the `bg-X/10 text-X` pill this app uses ~275 times, where the
+       tint lifts the background: warning bottomed out at 1.98:1.
+       Measured at these values: text 5.19-5.42:1, pill 4.54-4.72:1, and white
+       labels on the solid fills clear 4.5:1 too. Hues are untouched, so the
+       colours still read as the same green/amber/red. */
+    --destructive: 0 84% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 152 62% 30%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 30%;
+    --warning-foreground: 0 0% 100%;
+
+    --radius: 0.75rem;
+
+    /* Motion vocabulary, shared verbatim with the family portal so the two
+       apps accelerate and settle identically. Authored curves rather than the
+       CSS defaults, which are too weak to read as intentional. */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --duration-press: 120ms;
+    --duration-fast: 180ms;
+    --duration-base: 240ms;
+
+    --sidebar: 0 0% 100%;
+    --sidebar-foreground: 240 10% 10%;
+    --sidebar-border: 240 6% 88%;
+    --sidebar-accent: 243 75% 96%;
+    --sidebar-accent-foreground: 243 75% 45%;
+  }
+
+  .dark {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+
+    --card: 222 47% 8%;
+    --card-foreground: 213 31% 91%;
+
+    --popover: 222 47% 8%;
+    --popover-foreground: 213 31% 91%;
+
+    --border: 216 34% 17%;
+    --input: 216 34% 42%;
+    --ring: 243 75% 69%;
+
+    /* Lifted from 65%: at that value indigo measured 4.11:1 on the dark card,
+       under the 4.5 body-text floor. Lightening the swatch means the label on
+       top must go dark to stay readable. */
+    --primary: 243 75% 69%;
+    --primary-foreground: 224 71% 4%;
+
+    --secondary: 222 47% 13%;
+    --secondary-foreground: 213 31% 91%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215 16% 57%;
+
+    --accent: 222 47% 13%;
+    --accent-foreground: 213 31% 91%;
+
+    /* Dark mode inverts the problem: the swatches must LIGHTEN to stay legible
+       on a near-black card, which in turn means their labels go dark. Old
+       values measured --destructive 3.94:1 as text, and white-on-success just
+       2.70:1 as a solid button. Now 4.88-5.22:1 as text, 5.2-5.57:1 as fills. */
+    --destructive: 0 84% 59%;
+    --destructive-foreground: 224 71% 4%;
+
+    --success: 152 62% 37%;
+    --success-foreground: 224 71% 4%;
+
+    --warning: 38 92% 37%;
+    --warning-foreground: 224 71% 4%;
+
+    --sidebar: 222 47% 6%;
+    --sidebar-foreground: 213 31% 91%;
+    --sidebar-border: 216 34% 13%;
+    --sidebar-accent: 243 75% 15%;
+    --sidebar-accent-foreground: 243 75% 75%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv11", "ss01";
+    letter-spacing: -0.01em;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion means gentler, not none: colour and opacity still carry
+   meaning, so only movement, overshoot and smooth-scroll are stripped. This was
+   missing entirely — every Radix overlay entrance played regardless of the OS
+   setting. */
+@media (prefers-reduced-motion: reduce) {
+  /* Strip the travel, keep the fade. Colour and opacity still carry meaning —
+     they are what tells someone their click registered — so only movement and
+     overshoot go. Note the absence of `!important`: a component that needs a
+     specific reduced-motion treatment must still be able to opt back in via
+     Tailwind's `motion-reduce:` variant. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--duration-press);
+    animation-iteration-count: 1;
+    transition-duration: var(--duration-press);
+    /* Zeroes the translate/scale that tailwindcss-animate's enter/exit
+       utilities drive, leaving their opacity component intact. */
+    --tw-enter-translate-x: 0 !important;
+    --tw-enter-translate-y: 0 !important;
+    --tw-exit-translate-x: 0 !important;
+    --tw-exit-translate-y: 0 !important;
+    --tw-enter-scale: 1 !important;
+    --tw-exit-scale: 1 !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .glass {
+    @apply bg-white/80 dark:bg-white/5 backdrop-blur-md border border-white/20 dark:border-white/10;
+  }
+  .rupee::before {
+    content: "\20B9";
+  }
+  /* Gradient / glow utilities retained from the previous theme, now token-aware. */
+  .bg-gradient-primary {
+    background-image: linear-gradient(135deg, hsl(243 75% 68%), hsl(243 75% 55%));
+  }
+  .text-gradient-primary {
+    background-image: linear-gradient(135deg, hsl(243 75% 62%), hsl(262 70% 60%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shadow-glow-indigo {
+    box-shadow: 0 4px 14px -2px hsl(243 75% 59% / 0.35);
+  }
+  .shadow-glow-green {
+    box-shadow: 0 4px 14px -2px hsl(152 62% 40% / 0.3);
+  }
+  .shadow-glow-rose {
+    box-shadow: 0 4px 14px -2px hsl(0 84% 60% / 0.3);
+  }
+}
+
+/* ── Marketing-only additions (plan §3.4, §3.5) ──────────────────────────
+   New surfaces, but made only of the tokens above. */
+@layer utilities {
+  /* Hero: radial wash from --accent (top-right) into --background, plus a
+     24px dot grid in --border at low opacity. */
+  .bg-hero {
+    background-image:
+      radial-gradient(ellipse 80% 70% at 100% 0%, hsl(var(--accent)) 0%, hsl(var(--background)) 70%);
+  }
+  .bg-dot-grid {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.07) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  /* Faint accent band so long pages have visible chapters. */
+  .bg-band {
+    background-color: hsl(var(--accent) / 0.45);
+  }
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.08em] text-primary;
+  }
+}
+
+/* Fade-and-rise once on scroll: 12px, --duration-base, --ease-out. The
+   element is only hidden once JS has marked the document, so content is never
+   lost without JS. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity var(--duration-base) var(--ease-out),
+    transform var(--duration-base) var(--ease-out);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Gentler, not none: keep the fade, drop the travel. */
+  .js [data-reveal] {
+    transform: none;
+  }
+}
+
+/* ── Micro-visual motion (module-features-plan.md §4.6) ───────────────────
+   Each micro-visual element carries one `mv-*` class. The animation plays once
+   when its card is marked [data-inview] (set by RevealObserver) and replays on
+   hover: switching to the `-h` twin keyframes restarts it without JS. Every
+   element's resting style is its final state, so no-JS and reduced-motion
+   visitors simply see the finished picture. Nothing runs longer than 600ms. */
+@keyframes mv-fade { from { opacity: 0; transform: translateY(4px); } }
+@keyframes mv-fade-h { from { opacity: 0; transform: translateY(4px); } }
+@keyframes mv-grow-x { from { transform: scaleX(0); } }
+@keyframes mv-grow-x-h { from { transform: scaleX(0); } }
+@keyframes mv-grow-y { from { transform: scaleY(0); } }
+@keyframes mv-grow-y-h { from { transform: scaleY(0); } }
+@keyframes mv-pop { from { opacity: 0; transform: scale(0.92); } }
+@keyframes mv-pop-h { from { opacity: 0; transform: scale(0.92); } }
+@keyframes mv-stamp { from { opacity: 0; transform: scale(1.1); } }
+@keyframes mv-stamp-h { from { opacity: 0; transform: scale(1.1); } }
+@keyframes mv-roll { from { opacity: 0; transform: translateY(100%); } }
+@keyframes mv-roll-h { from { opacity: 0; transform: translateY(100%); } }
+@keyframes mv-roll-out { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-100%); } }
+@keyframes mv-roll-out-h { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-100%); } }
+@keyframes mv-drop { from { opacity: 0; transform: translateY(-110%); } }
+@keyframes mv-drop-h { from { opacity: 0; transform: translateY(-110%); } }
+@keyframes mv-knob { from { transform: translateX(-14px); } }
+@keyframes mv-knob-h { from { transform: translateX(-14px); } }
+@keyframes mv-track { from { background-color: hsl(var(--input) / 0.6); } }
+@keyframes mv-track-h { from { background-color: hsl(var(--input) / 0.6); } }
+@keyframes mv-pulse { 50% { transform: scale(1.1); box-shadow: 0 0 0 4px hsl(var(--primary) / 0.25); } }
+@keyframes mv-pulse-h { 50% { transform: scale(1.1); box-shadow: 0 0 0 4px hsl(var(--primary) / 0.25); } }
+@keyframes mv-sweep { from { top: 0; opacity: 1; } 85% { opacity: 1; } to { top: 100%; opacity: 0; } }
+@keyframes mv-sweep-h { from { top: 0; opacity: 1; } 85% { opacity: 1; } to { top: 100%; opacity: 0; } }
+@keyframes mv-type { from { clip-path: inset(0 100% 0 0); } }
+@keyframes mv-type-h { from { clip-path: inset(0 100% 0 0); } }
+
+.js [data-inview] .mv-fade { animation: mv-fade 280ms var(--ease-out) both; }
+.js [data-inview] .mv-grow-x { animation: mv-grow-x 450ms var(--ease-out) both; transform-origin: left; }
+.js [data-inview] .mv-grow-y { animation: mv-grow-y 420ms var(--ease-out) both; transform-origin: bottom; }
+.js [data-inview] .mv-pop { animation: mv-pop 240ms var(--ease-out) both; }
+.js [data-inview] .mv-stamp { animation: mv-stamp 260ms var(--ease-out) both; }
+.js [data-inview] .mv-roll { animation: mv-roll 320ms var(--ease-out) both; }
+.js [data-inview] .mv-roll-out { animation: mv-roll-out 320ms var(--ease-out) both; }
+.js [data-inview] .mv-drop { animation: mv-drop 380ms var(--ease-out) both; }
+.js [data-inview] .mv-knob { animation: mv-knob 260ms var(--ease-out) both; }
+.js [data-inview] .mv-track { animation: mv-track 260ms var(--ease-out) both; }
+.js [data-inview] .mv-pulse { animation: mv-pulse 500ms var(--ease-out) both; }
+.js [data-inview] .mv-sweep { animation: mv-sweep 420ms var(--ease-out) both; }
+.js [data-inview] .mv-type { animation: mv-type 400ms steps(18, end) both; }
+/* Same element, roll-out cell of a ticking clock: hidden at rest. */
+.mv-roll-out { opacity: 0; }
+
+@media (hover: hover) {
+  .js [data-inview]:hover .mv-fade { animation-name: mv-fade-h; }
+  .js [data-inview]:hover .mv-grow-x { animation-name: mv-grow-x-h; }
+  .js [data-inview]:hover .mv-grow-y { animation-name: mv-grow-y-h; }
+  .js [data-inview]:hover .mv-pop { animation-name: mv-pop-h; }
+  .js [data-inview]:hover .mv-stamp { animation-name: mv-stamp-h; }
+  .js [data-inview]:hover .mv-roll { animation-name: mv-roll-h; }
+  .js [data-inview]:hover .mv-roll-out { animation-name: mv-roll-out-h; }
+  .js [data-inview]:hover .mv-drop { animation-name: mv-drop-h; }
+  .js [data-inview]:hover .mv-knob { animation-name: mv-knob-h; }
+  .js [data-inview]:hover .mv-track { animation-name: mv-track-h; }
+  .js [data-inview]:hover .mv-pulse { animation-name: mv-pulse-h; }
+  .js [data-inview]:hover .mv-sweep { animation-name: mv-sweep-h; }
+  .js [data-inview]:hover .mv-type { animation-name: mv-type-h; }
+}
+
+/* Reduced motion: final state, no movement (§4.6). */
+@media (prefers-reduced-motion: reduce) {
+  [class*='mv-'] { animation: none !important; }
+}
+
+/* ── "Free trial" nav flash ───────────────────────────────────────────────
+   A light sweep crosses the pill every few seconds and the dot pings, so the
+   offer catches the eye without moving the layout. Reduced motion: still. */
+@keyframes nav-flash-sweep {
+  0% { transform: translateX(-150%) skewX(-20deg); }
+  45%, 100% { transform: translateX(350%) skewX(-20deg); }
+}
+@keyframes nav-flash-ping {
+  0% { transform: scale(1); opacity: 0.6; }
+  70%, 100% { transform: scale(2.4); opacity: 0; }
+}
+.nav-flash { isolation: isolate; }
+/* The sweep lives in its own clipped layer so the corner dot isn't clipped. */
+.nav-flash-sweep { position: absolute; inset: 0; z-index: -1; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.nav-flash-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 35%;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent, hsl(var(--primary) / 0.35), transparent);
+  animation: nav-flash-sweep 3s var(--ease-in-out) infinite;
+  pointer-events: none;
+}
+.nav-flash-ping { animation: nav-flash-ping 1.6s var(--ease-out) infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .nav-flash-sweep::after,
+  .nav-flash-ping { animation: none !important; }
+  .nav-flash-sweep::after { display: none; }
+}

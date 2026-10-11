@@ -1,0 +1,20 @@
+// One mock-up per file (module-features-plan.md §6); re-exported here so
+// pages import from '@/components/mockups'.
+
+export { SeatLedgerMock } from './SeatLedger'
+export { FeeHoldMock } from './FeeHold'
+export { PromotionMock } from './Promotion'
+export { FeeBalanceMock } from './FeeBalance'
+export { CoverMock } from './CoverArrangement'
+export { ResultRulesMock } from './ResultRules'
+export { LowAttendanceMock } from './LowAttendance'
+export { AttendanceMock } from './Attendance'
+export { HomeworkCompletionMock } from './HomeworkCompletion'
+export { LibraryScanMock } from './LibraryScan'
+export { BoardingRosterMock } from './BoardingRoster'
+export { BiometricChainMock } from './BiometricChain'
+export { VerifyMock } from './Verify'
+export { NotificationsPhoneMock } from './Notifications'
+export { PortalPhoneMock } from './PortalPhone'
+export { DashboardMock } from './Dashboard'
+export { SettingsPanelMock } from './SettingsPanel'

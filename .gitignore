@@ -1,0 +1,10 @@
+.next
+node_modules
+*.tsbuildinfo
+next-env.d.ts
+.env*
+.vercel
+
+# Internal planning docs: kept locally, not published (the repo is public).
+plan.md
+module-features-plan.md
