@@ -19,7 +19,7 @@ import {
   SeatLedgerMock,
 } from '@/components/mockups'
 import { POSITIONING, REPLACES } from '@/content/site'
-import { SITE_URL } from '@/lib/utils'
+import { APP_HOST, SITE_URL } from '@/lib/utils'
 
 const STANDOUTS = [
   {
@@ -138,7 +138,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="relative pb-10 sm:pb-0 sm:pr-10">
-            <BrowserFrame url="app.airtec.in/dashboard">
+            <BrowserFrame url={`${APP_HOST}/dashboard`}>
               <DashboardMock />
             </BrowserFrame>
             <PhoneFrame className="absolute -bottom-2 right-0 w-[188px] sm:-bottom-10 sm:w-[196px]">

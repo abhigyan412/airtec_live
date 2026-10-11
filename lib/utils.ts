@@ -24,7 +24,13 @@ export const STATUS_PILL = {
 
 export type PillTone = keyof typeof STATUS_PILL
 
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://airtec.in'
-export const STAFF_APP_URL = process.env.NEXT_PUBLIC_STAFF_APP_URL || 'https://app.airtec.in'
-export const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL || 'https://parents.airtec.in'
-export const CONTACT_EMAIL = 'hello@airtec.in'
+// The one place the domain lives. Every URL, email and the addresses shown
+// in browser-frame mock-ups derive from it.
+export const DOMAIN = 'airtec.live'
+export const APP_HOST = `app.${DOMAIN}`
+export const PORTAL_HOST = `parents.${DOMAIN}`
+
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || `https://${DOMAIN}`
+export const STAFF_APP_URL = process.env.NEXT_PUBLIC_STAFF_APP_URL || `https://${APP_HOST}`
+export const PORTAL_URL = process.env.NEXT_PUBLIC_PORTAL_URL || `https://${PORTAL_HOST}`
+export const CONTACT_EMAIL = `hello@${DOMAIN}`

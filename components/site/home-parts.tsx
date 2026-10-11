@@ -2,6 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ROLE_TABS } from '@/content/site'
 import { BrowserFrame } from './frames'
+import { APP_HOST, PORTAL_HOST } from '@/lib/utils'
 import { Check } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -49,7 +50,7 @@ export function RoleTabs({ visuals }: { visuals: Record<string, React.ReactNode>
                 ))}
               </ul>
             </div>
-            <BrowserFrame url={r.id === 'parent' ? 'parents.airtec.in' : 'app.airtec.in'} className="bg-muted/40">
+            <BrowserFrame url={r.id === 'parent' ? PORTAL_HOST : APP_HOST} className="bg-muted/40">
               <div className="p-4">{visuals[r.id]}</div>
             </BrowserFrame>
           </div>
