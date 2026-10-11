@@ -7,7 +7,7 @@ import { CONTACT_EMAIL, DOMAIN } from '@/lib/utils'
 // Rules. AIRTEC is not yet a registered company: when it is, put its legal
 // name and registered office in "Who we are" and bump LAST_UPDATED.
 
-const LAST_UPDATED = '12 October 2026'
+const LAST_UPDATED = '12 October 2025'
 
 export const metadata: Metadata = {
   title: 'Privacy',
