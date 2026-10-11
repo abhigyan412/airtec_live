@@ -1662,7 +1662,7 @@ export const MODULES: Module[] = [
       },
     ],
     related: ['timetable', 'certificates', 'attendance'],
-    source: 'modules/hrms/routes.ts, hrms/schoolknot.ts, commits d66bccd4, 73a69944',
+    source: 'modules/hrms/routes.ts, commits d66bccd4, 73a69944',
   },
   {
     slug: 'family-portal',

@@ -139,7 +139,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: 'Does it work with our biometric device?',
-    a: 'AIRTEC syncs staff attendance from SchoolKnot biometric devices, with device-to-staff mapping. A teacher who hasn’t checked in becomes a proposed absence, and their periods become cover requests. Ask us about other devices.',
+    a: 'AIRTEC syncs staff attendance from your biometric device, with device-to-staff mapping. A teacher who hasn’t checked in becomes a proposed absence, and their periods become cover requests. Tell us which device you use and we’ll confirm it’s supported.',
   },
   {
     q: 'Which boards are supported?',

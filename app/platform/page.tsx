@@ -32,7 +32,7 @@ const ITEMS = [
   {
     icon: Fingerprint,
     title: 'Biometric attendance',
-    body: 'Staff attendance syncs from SchoolKnot devices, with device-to-staff mapping, and feeds timetable cover automatically.',
+    body: 'Staff attendance syncs from your biometric device, with device-to-staff mapping, and feeds timetable cover automatically.',
   },
   {
     icon: FileSpreadsheet,
