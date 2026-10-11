@@ -21,16 +21,25 @@ npm run build && npm start
 | `app/globals.css`, `tailwind.config.js` | Copied verbatim from the staff app. Marketing additions are at the bottom of `globals.css`. |
 | `lib/lead-schema.ts` | Zod schema for `POST /api/public/leads`. The backend can import it. |
 
-## Env (build-time)
+## Environment variables
 
-`BACKEND_URL` (default `http://localhost:4000`), `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_STAFF_APP_URL`, `NEXT_PUBLIC_PORTAL_URL`.
+See [.env.example](.env.example). On Vercel, set them under Project → Settings → Environment Variables (Production), then redeploy.
+
+| Variable | Purpose |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | `https://airtec.live`, used for the sitemap, robots and share previews |
+| `SUPABASE_URL`, `SUPABASE_ANON_KEY` | Where leads are written (the public anon key) |
+| `LEADS_INSERT_SECRET` | Add-only secret; must match `marketing_lead_settings.insert_secret` in the database |
+| `LEADS_WEBHOOK_URL` | Optional Discord / Slack / Google Chat webhook pinged per lead |
+
+## Lead capture
+
+`POST /api/public/leads` ([app/api/public/leads/route.ts](app/api/public/leads/route.ts), logic in [lib/leads-server.ts](lib/leads-server.ts)) handles the demo form, the home-page short form and free-trial requests. It validates, drops spam (filled honeypot or a submit under 3s) with a decoy 201, writes the lead to Supabase `marketing_leads`, then pings the webhook.
+
+It writes with the anon key plus `LEADS_INSERT_SECRET`. A database policy (airtec repo, `supabase/migrations/20261011010000_marketing_leads_site_insert.sql`) only lets the anon key insert with that secret, and never read, so the service-role key never leaves the backend. There is no rate limit on Vercel beyond the spam checks; add a Vercel Firewall rate-limit rule on `/api/public/leads` if spam appears.
 
 ## Not done yet
 
-- **Lead capture (plan §9):** built in the `airtec` repo, not yet live.
-  - `POST /api/public/leads` in `backend/src/modules/public/routes.ts`, with the logic and its tests in `backend/src/shared/utils/marketingLeads.ts`. It handles `form: 'full' | 'short' | 'trial'`, and a trial carries `trial_module`.
-  - Leads are stored in the `marketing_leads` table (`supabase/migrations/20261011000000_marketing_leads.sql`). **Apply that migration** in the Supabase SQL editor before going live: until then every real submission returns 500.
-  - Each lead is posted to `LEADS_WEBHOOK_URL` (a Slack, Google Chat or Discord incoming webhook) if it is set.
 - **Screenshots (plan §12):** visuals are live mock-ups. Real screenshots from the seeded school still need capturing.
 - **Placeholders:**
   - the contact email (`lib/utils.ts`)
