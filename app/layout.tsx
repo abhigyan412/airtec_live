@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: 'AIRTEC · School ERP built for Indian schools', template: '%s · AIRTEC' },
   description:
-    'One system for the entire school: admissions, fees, timetable, exams, attendance, library, transport, HR and a family portal, with every rule configurable.',
+    'Most school ERPs keep records. AIRTEC does the daily work: substitutes arranged and fee reminders sent before the first bell, across admissions, fees, timetable, exams, library, transport, HR and apps for staff and parents.',
   applicationName: 'AIRTEC',
   openGraph: { type: 'website', siteName: 'AIRTEC', locale: 'en_IN' },
   icons: {

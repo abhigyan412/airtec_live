@@ -2,12 +2,13 @@
 // guardrail in plan §8 (no WhatsApp/SMS, no live GPS, no PDF timetable export,
 // no certifications, no AI claims until merged, no testimonials) applies here.
 
+// The hook: other ERPs are a place to keep records; AIRTEC's scheduled jobs
+// (DAY_TIMELINE) do the routine work. Lead with that, then the breadth.
 export const POSITIONING = {
-  headlineLead: 'One system for the entire school, from admissions to alumni.',
-  headlineRest: 'Built for how Indian schools actually work, with ',
-  headlineAccent: 'every rule configurable',
-  headlineTail: ' instead of hardcoded.',
-  sub: 'Admissions, fees, timetable, exams, library, transport, HR and a family portal, connected so a change in one place shows up everywhere it should.',
+  headlineLead: 'Most school ERPs keep records.',
+  headlineAccent: 'AIRTEC does the daily work.',
+  sub: 'Before the first bell, it has arranged substitutes for absent teachers and sent fee reminders. All day, it releases unpaid seats, chases covers and flags only what needs you. One connected system for the whole school, from admissions to alumni, with every rule configurable.',
+  proof: ['17 jobs that run on their own', '12 connected modules', 'Apps for staff and parents'],
 }
 
 /**

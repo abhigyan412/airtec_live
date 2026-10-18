@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { ArrowRight, BadgeCheck, GitBranch, KeyRound, Contrast } from 'lucide-react'
+import { ArrowRight, BadgeCheck, Check, GitBranch, KeyRound, Contrast } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Container, Section, SectionHeading } from '@/components/site/section'
-import { BrowserFrame, PhoneFrame } from '@/components/site/frames'
+import { BrowserFrame } from '@/components/site/frames'
 import { CtaBand, DayTimeline, FaqList, ModuleGrid, faqJsonLd } from '@/components/site/blocks'
 import { TrialBand } from '@/components/site/trial'
 import { LazyShortLeadForm, RoleTabs } from '@/components/site/home-parts'
@@ -10,10 +10,11 @@ import { JsonLd } from '@/components/site/json-ld'
 import {
   AttendanceMock,
   CoverMock,
-  DashboardMock,
   FeeBalanceMock,
   FeeHoldMock,
+  FeePushMock,
   LibraryScanMock,
+  MorningFeedMock,
   PortalPhoneMock,
   ResultRulesMock,
   SeatLedgerMock,
@@ -111,14 +112,10 @@ export default function HomePage() {
         <Container className="relative grid items-center gap-12 pb-20 pt-12 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:pb-28">
           <div>
             <p className="eyebrow">School ERP for India</p>
-            <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-5xl lg:text-6xl">
-              {POSITIONING.headlineLead}
+            <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-[-0.03em] sm:text-5xl lg:text-[3.5rem]">
+              {POSITIONING.headlineLead} <span className="text-gradient-primary">{POSITIONING.headlineAccent}</span>
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground md:text-xl">
-              {POSITIONING.headlineRest}
-              <span className="text-gradient-primary font-semibold">{POSITIONING.headlineAccent}</span>
-              {POSITIONING.headlineTail}
-            </p>
+            <p className="mt-6 text-lg text-muted-foreground">{POSITIONING.sub}</p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-11 shadow-glow-indigo">
                 <Link href="/contact">
@@ -126,24 +123,25 @@ export default function HomePage() {
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-11">
-                <Link href="/modules">Explore modules</Link>
+                <Link href="/free-trial">Pick a module, try it free</Link>
               </Button>
             </div>
-            <p className="mt-4 text-sm text-muted-foreground">
-              Or{' '}
-              <Link href="/free-trial" className="font-medium text-primary underline-offset-4 hover:underline">
-                pick one module and try it free
-              </Link>
-              . No payment details needed.
-            </p>
+            <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+              {POSITIONING.proof.map((p) => (
+                <li key={p} className="flex items-center gap-1.5">
+                  <Check className="h-4 w-4 text-success" aria-hidden />
+                  {p}
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="relative pb-10 sm:pb-0 sm:pr-10">
-            <BrowserFrame url={`${APP_HOST}/dashboard`}>
-              <DashboardMock />
+          <div data-reveal className="relative sm:pb-6">
+            <BrowserFrame url={`${APP_HOST}/dashboard`} className="shadow-lg">
+              <MorningFeedMock />
             </BrowserFrame>
-            <PhoneFrame className="absolute -bottom-2 right-0 w-[188px] sm:-bottom-10 sm:w-[196px]">
-              <PortalPhoneMock />
-            </PhoneFrame>
+            <div className="mv-pop mt-3 sm:absolute sm:-bottom-2 sm:right-4 sm:mt-0 sm:w-[260px]" style={{ animationDelay: '1900ms' }}>
+              <FeePushMock />
+            </div>
           </div>
         </Container>
       </section>

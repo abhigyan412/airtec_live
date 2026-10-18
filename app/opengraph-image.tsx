@@ -28,8 +28,8 @@ export default function OgImage() {
           <div style={{ width: 56, height: 56, borderRadius: 16, background: 'linear-gradient(135deg,#7f78ee,#4f46e5)' }} />
           <div style={{ fontSize: 36, fontWeight: 800, letterSpacing: -1 }}>AIRTEC</div>
         </div>
-        <div style={{ fontSize: 64, fontWeight: 800, letterSpacing: -2, lineHeight: 1.08, maxWidth: 1000 }}>{POSITIONING.headlineLead}</div>
-        <div style={{ fontSize: 28, color: '#4f46e5', fontWeight: 600 }}>Every rule configurable, instead of hardcoded.</div>
+        <div style={{ fontSize: 64, fontWeight: 800, letterSpacing: -2, lineHeight: 1.08, maxWidth: 1000 }}>{POSITIONING.headlineLead} {POSITIONING.headlineAccent}</div>
+        <div style={{ fontSize: 28, color: '#4f46e5', fontWeight: 600 }}>School ERP for India · try any module free</div>
       </div>
     ),
     size,
